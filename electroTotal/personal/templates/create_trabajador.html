@@ -1,6 +1,26 @@
 <!-- create_trabajador.html -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Crear Trabajador</button>
-</form>
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h1>Crear nuevo trabajador</h1>
+    <form method="post" class="create-user-form"> 
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-field">
+          {{ field.label_tag }}  <!-- Muestra el nombre del campo -->
+          {{ field }}  <!-- Muestra el campo en sí (input) -->
+          {% if field.errors %}
+            <div class="error-message">
+              {% for error in field.errors %}
+                <p>{{ error }}</p>  <!-- Muestra cada error debajo del campo -->
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+        <button type="submit" class="btn-submit">Crear Trabajador</button>
+    </form>
+</div>
+{% endblock %}
+

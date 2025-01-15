@@ -1,6 +1,13 @@
 <!-- login.html -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Iniciar sesión</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Iniciar sesión</h1>
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-submit">Iniciar sesión</button>
+    </form>
+</div>
+{% endblock %}

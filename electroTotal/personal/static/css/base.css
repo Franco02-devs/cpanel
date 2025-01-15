@@ -1,0 +1,238 @@
+/* base.css */
+
+/* Estilo Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0f0a0a;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Cabecera */
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 1.5rem 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: #0f0a0a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 2.9rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+}
+
+#menu {
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.navbar a, .navbar span {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: #ff00ee;
+}
+
+/* Contenido principal */
+main {
+    padding-top: 80px; /* Ajuste para espacio con la cabecera fija */
+}
+
+main h1 {
+    font-size: 3rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+/* Pie de página */
+footer {
+    background-color: #080707;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Contenedor de formularios */
+.form-container {
+    max-width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    text-align: center;
+}
+
+.form-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Formularios generales */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+form label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 5px;  /* Espacio entre el nombre y el cuadro de texto */
+    text-align: left;
+}
+
+form input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    width: 100%;  /* Aseguramos que los inputs ocupen todo el ancho disponible */
+}
+
+form input:focus {
+    border-color: #ff00ee;
+    outline: none;
+}
+
+form button {
+    padding: 10px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* base.css */
+
+/* Estilo para los mensajes de error */
+.error-message {
+    color: #ff4d4d; /* Color rojo para los errores */
+    background-color: #f8d7da; /* Fondo rojo claro */
+    border: 1px solid #f5c6cb; /* Borde suave */
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.error-message p {
+    margin: 0;
+    font-weight: bold;
+}
+
+
+/* Ajustes adicionales si se requieren */
+form input[type="submit"], form button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+form input[type="submit"]:hover, form button:hover {
+    background-color: #0056b3;
+}
+
+
+.login-form button {
+    background-color: #007bff;
+    color: #b3d6fc;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+    color: #fff;    
+}
+
+.create-user-form button {
+    background-color: #28a745;
+    color: #b0f3b8;    
+}
+
+.create-user-form button:hover {
+    background-color: #218838;
+    color: #fff;    
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    /* Header */
+    .header {
+        padding: 1.5rem 5%;
+    }
+
+    .navbar {
+        display: none; /* Inicia oculta en móviles */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background: #1e1e1e;
+        gap: 1rem;
+        position: absolute;
+        top: 80px; /* Para que se muestre debajo de la cabecera */
+        left: 0;
+        padding: 1rem 0;
+        z-index: 100;
+        border-radius: 5px;
+    }
+
+    .navbar.active {
+        display: flex;
+    }
+
+    .navbar a {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
+
+    #menu {
+        display: block; /* Mostrar el ícono de menú */
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Animación para el ícono de menú */
+    #menu.active {
+        transform: rotate(90deg);
+    }
+
+    .logo {
+        font-size: 2rem; /* Hacemos el logo un poco más pequeño */
+    }
+
+    /* Ajuste para el botón de menú */
+    #menu {
+        font-size: 2.5rem;
+        color: #fff;
+    }
+}
