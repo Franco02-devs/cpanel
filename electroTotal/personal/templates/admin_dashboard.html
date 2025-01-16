@@ -1,0 +1,96 @@
+<!-- admin_dashboard.html -->
+
+{% extends 'base.html' %}
+
+{% block extra_styles %}
+    <style>
+        /* Estilos generales para el Dashboard */
+        .titledash {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em; /* Tamaño del texto, ajusta como lo necesites */
+        }
+
+        .dashboard-container {
+            background-color: rgba(47, 53, 59, 0.9); /* Gris oscuro con 80% de opacidad */
+            background-size: cover;
+            padding: 30px;
+            border-radius: 1px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            margin: 20px;
+        }
+        
+
+        /* Contenedor para los cuadros */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Tamaño mínimo de los cuadros más pequeño */
+            gap: 15px; /* Reduce el espacio entre cuadros */
+        }
+        
+        .dashboard-box {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.2); /* Transparente */
+            border-radius: 1px;
+            overflow: hidden;
+            transition: transform 3s ease;
+            height: 120px; /* Ajusta el tamaño del cuadro */
+            width: 100%;  /* Ajusta el ancho para que ocupe todo el espacio disponible */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dashboard-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7; /* Imagen suave */
+            transition: opacity 0.3s ease;
+        }
+        
+        .dashboard-box:hover {
+            background-color: rgba(255, 255, 255, 0.5); /* Transparente */
+            border-color: white;
+            border-width: 2px;  /* Establece el grosor del borde al pasar el mouse */
+            border-style: solid; /* Asegura que el borde sea visible */
+        }
+        
+        .dashboard-box:hover img {
+            opacity: 1; /* Imagen más nítida al hacer hover */
+        }
+        
+        .dashboard-box .label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-size: 11px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-container">
+        <h1 class="titledash">Dashboard de administrador</h1>
+
+        <div class="dashboard-grid">
+            <!-- Cuadro para crear usuario -->
+            <div class="dashboard-box">
+                <img src="https://chisellabs.com/glossary/wp-content/uploads/2023/05/962b45f9-e2a6-4f59-8f0a-9e1e1a1d1f7f.png" alt="Crear Usuario">
+                <div class="label">Crear un Usuario</div>
+                <a href="{% url 'create_user' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+            </div>
+
+            <!-- Cuadro para crear trabajador -->
+            <div class="dashboard-box">
+                <img src="https://i.ibb.co/1zdkvgn/96242414-empleados-de-la-empresa-ilustraci-n-vectorial-en-estilo-de-dibujos-animados-removebg-previe.png" alt="Crear Trabajador">
+                <div class="label">Crear un Trabajador</div>
+                <a href="{% url 'create_trabajador' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+            </div>
+
+            <!-- Aquí puedes agregar más cuadros si lo deseas -->
+        </div>
+    </div>
+{% endblock %}

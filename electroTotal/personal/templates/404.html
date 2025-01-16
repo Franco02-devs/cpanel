@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block extra_styles %}
+    <style>
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #f44336;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        a {
+            font-size: 1em;
+            color: #2196F3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>¡Página no encontrada!</h1>
+    <p>Lo sentimos, pero la página que buscas no existe o ha sido movida.</p>
+    <p><a href="home2">Volver al inicio</a></p>
+{% endblock %}

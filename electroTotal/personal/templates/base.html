@@ -6,6 +6,7 @@
     <title>ELECTROTOTAL</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     {% block extra_styles %}
     <!-- Aquí se pueden incluir estilos adicionales -->
     {% endblock %}
@@ -14,9 +15,10 @@
 <body>
     <!-- Cabecera -->
     <header class="header">
-        <a href="#" class="logo">ELECTROTOTAL</a>
-        
-        <div id="menu" class="bx bx-menu"></div>
+        <a href="#" class="logo">
+            <img src="https://i.ibb.co/D91DT3B/logo-removebg-preview-1.png" alt="ELECTROTOTAL">
+          </a>
+          <div id="menu" class="bx bx-menu"></div>
         <nav class="navbar">
             {% if user.is_authenticated %}
                 <span>{{ user.username }}</span>

@@ -21,7 +21,7 @@ def create_user_view(request):
 
     return render(request, 'create_user.html', {'form': form})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or (u.user_type=="admin"))
 def create_trabajador_view(request):
     if request.method == 'POST':
         form = TrabajadorCreationForm(request.POST)
@@ -45,6 +45,20 @@ def create_trabajador_view(request):
 
     return render(request, 'create_trabajador.html', {'form': form})
 
+@user_passes_test(lambda u: u.is_superuser or (u.user_type=="admin"))
+def trabajador_creado_view(request, trabajador_id):
+    trabajador = Trabajador.objects.get(id=trabajador_id)
+    return render(request, 'trabajador_creado.html', {'trabajador': trabajador})
+
+@user_passes_test(lambda u: u.is_superuser)
+def user_created_view(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    return render(request, 'user_creado.html', {'user': user})
+
+@user_passes_test(lambda u: u.is_superuser or (u.user_type=="admin"))
+def dashboard_view(request):
+    return render(request, 'admin_dashboard.html')
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -55,7 +69,10 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                if user.user_type=="admin" or user.is_superuser :
+                    return redirect('home2')
+                else:
+                    return redirect("home")
             else:
                 messages.error(request, 'Nombre de usuario o contraseña incorrectos')
     else:
@@ -67,17 +84,6 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-@user_passes_test(lambda u: u.is_superuser)
-def trabajador_creado_view(request, trabajador_id):
-    trabajador = Trabajador.objects.get(id=trabajador_id)
-    return render(request, 'trabajador_creado.html', {'trabajador': trabajador})
-
-@user_passes_test(lambda u: u.is_superuser)
-def user_created_view(request, user_id):
-    user = CustomUser.objects.get(id=user_id)
-    return render(request, 'user_creado.html', {'user': user})
-
-
 def home_view(request):
     if request.user.is_authenticated:
         username = request.user.username
@@ -86,5 +92,14 @@ def home_view(request):
         mensaje = "¡Inicia sesión!"
     
     return render(request, 'home.html', {'mensaje': mensaje})
+
+def home_view2(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        mensaje = f"Hola {username}!"
+    else:
+        mensaje = "¡Inicia sesión!"
+    
+    return render(request, 'home2.html', {'mensaje': mensaje})
 
 
