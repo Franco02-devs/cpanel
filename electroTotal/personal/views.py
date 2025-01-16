@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, TrabajadorCreationForm
-from .models import CustomUser
-from .scripts import getFirstWord
+from .models import CustomUser, Trabajador
+from .scripts import getFirstWord, generate_unique_username
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -34,20 +34,20 @@ def create_trabajador_view(request):
             # Obtener la contraseña ingresada por el admin
             password = form.cleaned_data['password1']
             # Crear el usuario asociado al trabajador
-            username =getFirstWord(trabajador.empleado_nombre)
+            username=generate_unique_username(trabajador.empleado_nombre)
             user = CustomUser.objects.create_user(
                 username=username,
                 password=password  # Usar la contraseña proporcionada por el admin
             )
             # Asocia el trabajador al usuario
-            user.username=username+str(user.id)+str(user.is_staff)
+            user.username=username+str(user.id)+str(int(user.is_staff))
             user.save()
             trabajador.user = user
             trabajador.empleado_id=str(user.id)
             # Guarda el trabajador (ahora con el usuario asociado)
             trabajador.save()
             messages.success(request, "Trabajador creado exitosamente.")
-            return redirect('create_trabajador')  # Redirige a la lista de trabajadores u otra vista
+            return redirect('trabajador_creado', trabajador_id=trabajador.id)
     else:
         form = TrabajadorCreationForm()
 
@@ -76,6 +76,14 @@ def logout_view(request):
     logout(request)  # Cierra la sesión del usuario
     return redirect('login')  # Redirige a la página de login o donde desees
 
+@user_passes_test(lambda u: u.is_superuser)
+def trabajador_creado_view(request, trabajador_id):
+    trabajador = Trabajador.objects.get(id=trabajador_id)
+    
+    # Pasamos los detalles del trabajador a la plantilla
+    return render(request, 'trabajador_creado.html', {'trabajador': trabajador})
+
+
 
 # Vista de Home
 def home_view(request):
@@ -86,4 +94,5 @@ def home_view(request):
         mensaje = "¡Inicia sesión!"
     
     return render(request, 'home.html', {'mensaje': mensaje})
+
 
