@@ -4,47 +4,39 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, TrabajadorCreationForm
 from .models import CustomUser, Trabajador
-from .scripts import getFirstWord, generate_unique_username
+from .scripts import generate_unique_username
 from django.contrib.auth.forms import AuthenticationForm
 
-
-# Vista de creación de usuario solo accesible para superadmins
 @user_passes_test(lambda u: u.is_superuser)
 def create_user_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            # Crear un nuevo usuario
-            user = form.save(commit=False)  # No guardar aún para aplicar la contraseña
-            user.set_password(form.cleaned_data['password1'])  # Usar set_password para hash de la contraseña
-            user.save()  # Guardar el usuario con la contraseña ya segura
-            return redirect('home')  # Redirige a una página de éxito o lista de usuarios
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])
+            user.save()
+            return redirect('user_creado', user_id=user.id)
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'create_user.html', {'form': form})
 
-# Vista para crear un trabajador solo accesible para superadmins
 @user_passes_test(lambda u: u.is_superuser)
 def create_trabajador_view(request):
     if request.method == 'POST':
         form = TrabajadorCreationForm(request.POST)
         if form.is_valid():
             trabajador = form.save(commit=False)
-            # Obtener la contraseña ingresada por el admin
             password = form.cleaned_data['password1']
-            # Crear el usuario asociado al trabajador
             username=generate_unique_username(trabajador.empleado_nombre)
             user = CustomUser.objects.create_user(
                 username=username,
-                password=password  # Usar la contraseña proporcionada por el admin
+                password=password
             )
-            # Asocia el trabajador al usuario
             user.username=username+str(user.id)+str(int(user.is_staff))
             user.save()
             trabajador.user = user
             trabajador.empleado_id=str(user.id)
-            # Guarda el trabajador (ahora con el usuario asociado)
             trabajador.save()
             messages.success(request, "Trabajador creado exitosamente.")
             return redirect('trabajador_creado', trabajador_id=trabajador.id)
@@ -57,14 +49,13 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            # Autenticar al usuario
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirigir al home o la página principal
+                return redirect('home')
             else:
                 messages.error(request, 'Nombre de usuario o contraseña incorrectos')
     else:
@@ -73,19 +64,20 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
-    logout(request)  # Cierra la sesión del usuario
-    return redirect('login')  # Redirige a la página de login o donde desees
+    logout(request)
+    return redirect('login')
 
 @user_passes_test(lambda u: u.is_superuser)
 def trabajador_creado_view(request, trabajador_id):
     trabajador = Trabajador.objects.get(id=trabajador_id)
-    
-    # Pasamos los detalles del trabajador a la plantilla
     return render(request, 'trabajador_creado.html', {'trabajador': trabajador})
 
+@user_passes_test(lambda u: u.is_superuser)
+def user_created_view(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    return render(request, 'user_creado.html', {'user': user})
 
 
-# Vista de Home
 def home_view(request):
     if request.user.is_authenticated:
         username = request.user.username
