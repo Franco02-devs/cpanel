@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Registrar Asistencia</h1>
+    <form method="post" enctype="multipart/form-data" class="create-user-form">
+        {% csrf_token %}
+        <div class="form-field">
+            <p><strong>Trabajador:</strong> {{ request.user.trabajador.empleado_nombre }}</p>
+        </div>
+
+        {% for field in form %}
+        <div class="form-field">
+            {{ field.label_tag }} <!-- Muestra el nombre del campo -->
+            {{ field }} <!-- Muestra el campo en sí (input) -->
+            {% if field.errors %}
+            <div class="error-message">
+                {% for error in field.errors %}
+                <p>{{ error }}</p> <!-- Muestra cada error debajo del campo -->
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-submit">Registrar</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tipoField = document.querySelector('#id_tipo');
+    const fechaDiferidaField = document.querySelector('#id_fecha_diferida');
+    const lugarField = document.querySelector('#id_lugar');
+    const lugarCampoField = document.querySelector('#id_lugar_campo').parentElement;
+    
+    function toggleFields() {
+        if (tipoField.value.includes('destiempo')) {
+            fechaDiferidaField.parentElement.style.display = 'block';
+        } else {
+            fechaDiferidaField.parentElement.style.display = 'none';
+        }
+        if (lugarField.value === 'campo') {
+            lugarCampoField.style.display = 'block';
+        } else {
+            lugarCampoField.style.display = 'none';
+        }
+    }
+    
+    tipoField.addEventListener('change', toggleFields);
+    lugarField.addEventListener('change', toggleFields);
+    toggleFields();
+});
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Trabajador
+from .models import CustomUser, Trabajador, Asistencia
 
 class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="Contraseña", required=True)
@@ -22,15 +22,13 @@ class CustomUserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Este nombre de usuario ya está en uso.")
         return username
 
-
-    
 class TrabajadorCreationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="Contraseña", required=True)
     password2 = forms.CharField(widget=forms.PasswordInput, label="Confirmar Contraseña", required=True)
 
     class Meta:
         model = Trabajador
-        fields = ['empleado_nombre', 'departamento', 'rol', 'password1','password2']
+        fields = ['empleado_nombre', 'rol_preferido', 'password1','password2']
         
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -44,4 +42,34 @@ class TrabajadorCreationForm(forms.ModelForm):
         if Trabajador.objects.filter(empleado_nombre=empleado_nombre).exists():
             raise forms.ValidationError("Este nombre de usuario ya está en uso.")
         return empleado_nombre
-
+    
+class AsistenciaForm(forms.ModelForm):
+    class Meta:
+        model = Asistencia
+        fields = ['tipo', 'fecha_diferida','lugar',  'lugar_campo', 'foto']
+        widgets = {
+            'fecha_diferida': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+            'lugar_campo': forms.TextInput(),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        
+        # Preseleccionar lugar según el rol preferido
+        if user and hasattr(user, 'trabajador'):
+            rol_preferido = user.trabajador.rol_preferido
+            self.fields['lugar'].initial = rol_preferido
+        
+    def clean(self):
+        cleaned_data = super().clean()
+        tipo = cleaned_data.get('tipo')
+        lugar = cleaned_data.get('lugar')
+        
+        if 'destiempo' in tipo and not cleaned_data.get('fecha_diferida'):
+            self.add_error('fecha_diferida', "La fecha diferida es obligatoria para registros a destiempo.")
+        if lugar == 'campo' and not cleaned_data.get('lugar_campo'):
+            self.add_error('lugar_campo', "Debe especificar un lugar si el registro es en campo.")
+        return cleaned_data
+    
+   

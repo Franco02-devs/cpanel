@@ -135,6 +135,33 @@ form button {
     border-radius: 5px;
     cursor: pointer;
 }
+/* Estilo para los campos de lista desplegable (select) */
+form select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #d1e1f1;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #333333;
+    width: 100%;  /* Asegura que los selects ocupen todo el ancho disponible */
+    cursor: pointer;
+}
+
+/* Cambiar color del borde cuando el campo select tiene el foco */
+form select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Estilo adicional para los mensajes de error relacionados con los campos select */
+form select:invalid {
+    border-color: #ff4d4d; /* Rojo para indicar error */
+}
+
+form select:invalid:focus {
+    border-color: #ff4d4d; /* Borde rojo cuando el select tiene el foco y es inválido */
+}
+
 /* base.css */
 
 /* Estilo para los mensajes de error */
