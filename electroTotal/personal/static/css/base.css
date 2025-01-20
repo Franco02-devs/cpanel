@@ -11,33 +11,35 @@
 /* Cabecera */
 .header {
     position: fixed;
-    left: 0;
     top: 0;
-    padding: 0.2rem 5%;
+    left: 0;
+    padding: 0.5rem 5%;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
     background: #003366;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.7rem;
+    font-weight: 700;
     color: #fff;
     text-decoration: none;
+    letter-spacing: 1px;
 }
 
 .logo img {
-    width: 150px; /* Ajusta el tamaño según necesites */
+    width: 160px;
     height: auto;
 }
 
+/* Menú y Navbar */
 #menu {
     font-size: 2.5rem;
-    color: #ffffff;
+    color: #fff;
     cursor: pointer;
     display: none;
     transition: transform 0.3s ease;
@@ -45,27 +47,31 @@
 
 .navbar {
     display: flex;
-    gap: 2.5rem;
+    gap: 3rem;
+    align-items: center;
 }
 
-.navbar a, .navbar span {
+.navbar a,
+.navbar span {
     text-decoration: none;
     color: #fff;
     font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 50;
+    transition: color 0.3s ease;
 }
 
-.navbar a:hover, .navbar a.active {
+.navbar a:hover,
+.navbar a.active {
     color: #f83f3f;
-    text-shadow: 0.3px 0.3px 0.3px rgb(255, 255, 255);    
 }
 
 /* Contenido principal */
 main h1 {
-    font-size: 3rem;
-    font-weight: 500;
-    color: #003366 ;
+    font-size: 3.2rem;
+    font-weight: 50;
+    color: #003366;
     margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
 /* Pie de página */
@@ -73,50 +79,54 @@ footer {
     background-color: #054381;
     color: #f1f1f1;
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 1rem;
+    font-size: 1.1rem;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Contenedor de formularios */
 .form-container {
-    max-width: 450px; /* Aumentamos el tamaño del formulario en pantallas grandes */
-    margin: 50px auto;
-    padding: 20px;
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 25px;
     background-color: #f7f7f7;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(#e0e0e0);
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     color: #003366;
     text-align: center;
-    border: 2px solid #003366; /* Borde azul marino alrededor de la caja */
+    border: 2px solid #003366;
 }
 
 .form-container h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    font-weight: 150;
 }
 
 /* Formularios generales */
 form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 form label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #006699 ;
-    margin-bottom: 5px;  /* Espacio entre el nombre y el cuadro de texto */
+    font-size: 1.1rem;
+    font-weight: 50;
+    color: #006699;
+    margin-bottom: 6px;
     text-align: left;
 }
 
 form input {
-    padding: 10px;
-    font-size: 1rem;
-    border: 2px solid #d1e1f1 ;
-    border-radius: 5px;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 2px solid #d1e1f1;
+    border-radius: 0px;
     background-color: #ffffff;
-    color: #333333 ;
-    width: 100%;  /* Aseguramos que los inputs ocupen todo el ancho disponible */
+    color: #333333;
+    width: 100%;
+    transition: border 0.3s ease;
 }
 
 form input:focus {
@@ -125,113 +135,65 @@ form input:focus {
 }
 
 form button {
-    padding: 10px;
-    font-size: 1.1rem;
+    padding: 12px;
+    font-size: 1.2rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #78b3f7;
+    border-color: #4a90e2;
+}
+
+form button:hover {
+    background-color: #0056b3;
 }
 
 /* Estilo para los campos de lista desplegable (select) */
 form select {
-    padding: 10px;
-    font-size: 1rem;
+    padding: 12px;
+    font-size: 1.1rem;
     border: 2px solid #d1e1f1;
-    border-radius: 5px;
+    border-radius: 6px;
     background-color: #ffffff;
     color: #333333;
-    width: 100%;  /* Asegura que los selects ocupen todo el ancho disponible */
+    width: 100%;
     cursor: pointer;
+    transition: border 0.3s ease;
 }
 
-/* Cambiar color del borde cuando el campo select tiene el foco */
 form select:focus {
     border-color: #4a90e2;
     outline: none;
 }
 
-/* Estilo adicional para los mensajes de error relacionados con los campos select */
-form select:invalid {
-    border-color: #ff4d4d; /* Rojo para indicar error */
-}
-
-form select:invalid:focus {
-    border-color: #ff4d4d; /* Borde rojo cuando el select tiene el foco y es inválido */
-}
-
 /* Estilo para los mensajes de error */
 .error-message {
-    color: #ff4d4d; /* Color rojo para los errores */
-    background-color: #f8d7da; /* Fondo rojo claro */
-    border: 1px solid #f5c6cb; /* Borde suave */
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-top: 5px;
-    width: 100%;  /* Se ajusta al tamaño del formulario */
-    box-sizing: border-box; /* Para asegurar que el mensaje no se salga */
-}
-
-.error-message p {
-    margin: 0;
-    font-weight: bold;
-}
-
-/* Opcional: animación para la entrada de mensajes */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.messages {
-    animation: fadeIn 0.5s ease-in-out;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 100%;  /* Asegura que los mensajes no se salgan del contenedor */
+    color: #ff4d4d;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
     padding: 10px;
-    color: #333;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 1.1rem;
+    margin-top: 8px;
 }
 
-/* Estilo específico para mensajes de error */
-.message.error {
-    background-color: #f8d7da; /* Fondo rojo claro */
-    color: #721c24; /* Color de texto rojo oscuro */
-    border: 1px solid #f5c6cb; /* Borde suave */
-}
-
-/* Estilo específico para mensajes de éxito */
+/* Mensajes de éxito */
 .message.success {
-    background-color: #d4edda; /* Fondo verde claro */
-    color: #155724; /* Color de texto verde oscuro */
-    border: 1px solid #c3e6cb; /* Borde suave */
-}
-
-/* Estilo específico para mensajes de alerta o advertencia */
-.message.warning {
-    background-color: #fff3cd; /* Fondo amarillo claro */
-    color: #856404; /* Color de texto amarillo oscuro */
-    border: 1px solid #ffeeba; /* Borde suave */
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 /* Estilo para los mensajes dentro del formulario */
 .alert {
-    padding: 15px;
+    padding: 18px;
     border-radius: 8px;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .alert.error {
@@ -252,40 +214,56 @@ form select:invalid:focus {
     border: 1px solid #ffeeba;
 }
 
-/* Evitar que los mensajes de error o alertas sobresalgan del contenedor */
-.alert, .messages {
-    width: 100%;
-    max-width: 100%;  /* Asegura que los mensajes no se salgan del contenedor */
-    box-sizing: border-box;  /* Ajuste para que el padding no afecte el ancho */
+/* Cambios para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .navbar {
+        gap: 1rem;
+    }
+
+    .navbar a, .navbar span {
+        font-size: 1.1rem;
+    }
+
+    #menu {
+        display: block;
+    }
+
+    .header {
+        padding: 0.3rem 1%;
+    }
 }
 
-/* Ajustes adicionales si se requieren */
-form input[type="submit"], form button {
-    background-color: #007bff;
-    color: #fff;
+/* Cambios para pantallas más pequeñas (ej. móviles) */
+@media (max-width: 480px) {
+    .header {
+        padding: 0.4rem 1%;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .navbar a, .navbar span {
+        font-size: 1.2rem;
+    }
 }
 
-form input[type="submit"]:hover, form button:hover {
-    background-color: #0056b3;
-}
-
-/* Estilos para los botones de la forma de creación */
-.create-user-form button {
-    background-color: #28a745;
-    color: #d8ffdc;    
-}
-
-.create-user-form button:hover {
-    background-color: #218838;
-    color: #fff;    
-}
-
+/* Estilos para el fondo y cuerpo */
 body {
     background-color: #f7f7f7;
     color: #333333;
     font-size: 16px;
-    position: relative; /* Necesario para los pseudo-elementos */
-    overflow-x: hidden; /* Asegura que no haya desbordes */
+    position: relative;
+    overflow-x: hidden;
 }
 
 body::before {
@@ -298,77 +276,17 @@ body::before {
     background-image: url('https://twind.io/cl/wp-content/uploads/2023/06/seguridad-y-salud-de-los-trabajadores.webp');
     background-size: cover;
     background-position: center center;
-    filter: blur(0.5px); /* Desenfoque aplicado solo a la imagen de fondo */
-    opacity: 0.55;
-    z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+    filter: blur(0.6px);
+    opacity: 0.5;
+    z-index: -1;
 }
 
 main {
-    padding-top: 80px; /* Ajuste para espacio con la cabecera fija */
+    padding-top: 90px;
     position: relative;
-    z-index: 10; /* Asegura que el contenido esté por encima de la imagen */
+    z-index: 10;
 }
 
 header, footer {
-    z-index: 10; /* Asegura que otros elementos estén por encima de la imagen */
-}
-
-/* Cambios para pantallas más pequeñas */
-@media (max-width: 768px) {
-    /* Reducir el tamaño del logo */
-    .logo {
-        font-size: 0.5 rem; /* Reducir el tamaño del logo */
-    }
-
-    /* Hacer que el navbar sea más compacto */
-    .navbar {
-        gap: 0.5; /* Reducir el espacio entre los elementos */
-    }
-
-    .navbar a, .navbar span {
-        text-decoration: none;
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 0;
-    }
-
-    /* Mostrar el icono de menú en pantallas pequeñas */
-    #menu {
-        display: block; /* Mostrar el menú en pantallas pequeñas */
-    }
-
-    /* Hacer que la cabecera tenga un tamaño adecuado en móviles */
-    .header {
-        padding: 0.1rem 1%;
-    }
-}
-
-/* Cambios para pantallas aún más pequeñas (por ejemplo, dispositivos móviles pequeños) */
-@media (max-width: 480px) {
-    /* Ajustar la cabecera para pantallas muy pequeñas */
-    .header {
-        padding: 0.4rem 1%;
-    }
-
-    .logo {
-        font-size: 0.5rem; /* Reducir aún más el tamaño del logo */
-        font-weight: 400;
-    }
-
-    .navbar {
-        gap: 0.5rem; /* Espacio entre los enlaces */
-
-    }
-
-    .navbar a, .navbar span {
-        text-decoration: none;
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 0;
-    }
-
-    /* Mostrar el menú al pasar el cursor o hacer clic */
-    #menu {
-        display: block; /* Mostrar el menú como un botón */
-    }
+    z-index: 10;
 }

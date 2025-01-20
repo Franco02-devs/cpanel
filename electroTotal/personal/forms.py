@@ -29,7 +29,13 @@ class TrabajadorCreationForm(forms.ModelForm):
     class Meta:
         model = Trabajador
         fields = ['empleado_nombre', 'rol_preferido', 'password1','password2']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         
+        self.fields['empleado_nombre'].label = 'Nombre del colaborador'
+        self.fields['rol_preferido'].label = 'Lugar mas frecuente'
+   
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -37,10 +43,10 @@ class TrabajadorCreationForm(forms.ModelForm):
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return password2
     
-    def clean_username(self):
+    def clean_empleado_nombre(self):
         empleado_nombre = self.cleaned_data.get('empleado_nombre')
         if Trabajador.objects.filter(empleado_nombre=empleado_nombre).exists():
-            raise forms.ValidationError("Este nombre de usuario ya está en uso.")
+            raise forms.ValidationError("Ya existe un colaborador con este nombre")
         return empleado_nombre
     
 class AsistenciaForm(forms.ModelForm):

@@ -3,7 +3,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="form-container">
-    <h1>Crear nuevo trabajador</h1>
+    <h1>Crear nuevo colaborador</h1>
     <form method="post" class="create-user-form"> 
         {% csrf_token %}
         {% for field in form %}
@@ -19,7 +19,7 @@
           {% endif %}
         </div>
       {% endfor %}
-        <button type="submit" class="btn-submit">Crear Trabajador</button>
+        <button type="submit" class="btn-submit">Crear colaborador</button>
     </form>
 </div>
 {% endblock %}
