@@ -7,8 +7,17 @@
     <form method="post" enctype="multipart/form-data" class="create-user-form">
         {% csrf_token %}
         <div class="form-field">
-            <p><strong>Trabajador:</strong> {{ request.user.trabajador.empleado_nombre }}</p>
+            <p><strong>Bienvenido, </strong> {{ request.user.trabajador.empleado_nombre }}</p>
         </div>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         {% for field in form %}
         <div class="form-field">

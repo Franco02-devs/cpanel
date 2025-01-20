@@ -8,8 +8,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
-
 /* Cabecera */
 .header {
     position: fixed;
@@ -31,11 +29,11 @@
     color: #fff;
     text-decoration: none;
 }
+
 .logo img {
     width: 150px; /* Ajusta el tamaño según necesites */
     height: auto;
-  }
-  
+}
 
 #menu {
     font-size: 2.5rem;
@@ -63,8 +61,6 @@
 }
 
 /* Contenido principal */
-
-
 main h1 {
     font-size: 3rem;
     font-weight: 500;
@@ -82,7 +78,7 @@ footer {
 
 /* Contenedor de formularios */
 .form-container {
-    max-width: 350px;
+    max-width: 450px; /* Aumentamos el tamaño del formulario en pantallas grandes */
     margin: 50px auto;
     padding: 20px;
     background-color: #f7f7f7;
@@ -90,7 +86,7 @@ footer {
     box-shadow: 0px 4px 15px rgba(#e0e0e0);
     color: #003366;
     text-align: center;
-    border: #e0e0e0;
+    border: 2px solid #003366; /* Borde azul marino alrededor de la caja */
 }
 
 .form-container h1 {
@@ -135,6 +131,7 @@ form button {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* Estilo para los campos de lista desplegable (select) */
 form select {
     padding: 10px;
@@ -162,8 +159,6 @@ form select:invalid:focus {
     border-color: #ff4d4d; /* Borde rojo cuando el select tiene el foco y es inválido */
 }
 
-/* base.css */
-
 /* Estilo para los mensajes de error */
 .error-message {
     color: #ff4d4d; /* Color rojo para los errores */
@@ -173,6 +168,8 @@ form select:invalid:focus {
     border-radius: 5px;
     font-size: 1rem;
     margin-top: 5px;
+    width: 100%;  /* Se ajusta al tamaño del formulario */
+    box-sizing: border-box; /* Para asegurar que el mensaje no se salga */
 }
 
 .error-message p {
@@ -180,6 +177,87 @@ form select:invalid:focus {
     font-weight: bold;
 }
 
+/* Opcional: animación para la entrada de mensajes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.messages {
+    animation: fadeIn 0.5s ease-in-out;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 100%;  /* Asegura que los mensajes no se salgan del contenedor */
+    padding: 10px;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo específico para mensajes de error */
+.message.error {
+    background-color: #f8d7da; /* Fondo rojo claro */
+    color: #721c24; /* Color de texto rojo oscuro */
+    border: 1px solid #f5c6cb; /* Borde suave */
+}
+
+/* Estilo específico para mensajes de éxito */
+.message.success {
+    background-color: #d4edda; /* Fondo verde claro */
+    color: #155724; /* Color de texto verde oscuro */
+    border: 1px solid #c3e6cb; /* Borde suave */
+}
+
+/* Estilo específico para mensajes de alerta o advertencia */
+.message.warning {
+    background-color: #fff3cd; /* Fondo amarillo claro */
+    color: #856404; /* Color de texto amarillo oscuro */
+    border: 1px solid #ffeeba; /* Borde suave */
+}
+
+/* Estilo para los mensajes dentro del formulario */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.alert.error {
+    color: #f01b04;
+    background-color: #f8d1d1;
+    border: 1px solid #f8c6c6;
+}
+
+.alert.success {
+    color: #0d9c00;
+    background-color: #e1fac1;
+    border: 1px solid #c1e7a4;
+}
+
+.alert.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+/* Evitar que los mensajes de error o alertas sobresalgan del contenedor */
+.alert, .messages {
+    width: 100%;
+    max-width: 100%;  /* Asegura que los mensajes no se salgan del contenedor */
+    box-sizing: border-box;  /* Ajuste para que el padding no afecte el ancho */
+}
 
 /* Ajustes adicionales si se requieren */
 form input[type="submit"], form button {
@@ -191,17 +269,7 @@ form input[type="submit"]:hover, form button:hover {
     background-color: #0056b3;
 }
 
-
-.login-form button {
-    background-color: #007bff;
-    color: #c8e0fa;
-}
-
-.login-form button:hover {
-    background-color: #0056b3;
-    color: #fff;    
-}
-
+/* Estilos para los botones de la forma de creación */
 .create-user-form button {
     background-color: #28a745;
     color: #d8ffdc;    
@@ -211,6 +279,7 @@ form input[type="submit"]:hover, form button:hover {
     background-color: #218838;
     color: #fff;    
 }
+
 body {
     background-color: #f7f7f7;
     color: #333333;
@@ -229,7 +298,7 @@ body::before {
     background-image: url('https://twind.io/cl/wp-content/uploads/2023/06/seguridad-y-salud-de-los-trabajadores.webp');
     background-size: cover;
     background-position: center center;
-    filter: blur(1px); /* Desenfoque aplicado solo a la imagen de fondo */
+    filter: blur(0.5px); /* Desenfoque aplicado solo a la imagen de fondo */
     opacity: 0.55;
     z-index: -1; /* Asegura que la imagen esté detrás del contenido */
 }
@@ -243,6 +312,7 @@ main {
 header, footer {
     z-index: 10; /* Asegura que otros elementos estén por encima de la imagen */
 }
+
 /* Cambios para pantallas más pequeñas */
 @media (max-width: 768px) {
     /* Reducir el tamaño del logo */
@@ -289,6 +359,7 @@ header, footer {
         gap: 0.5rem; /* Espacio entre los enlaces */
 
     }
+
     .navbar a, .navbar span {
         text-decoration: none;
         color: #fff;

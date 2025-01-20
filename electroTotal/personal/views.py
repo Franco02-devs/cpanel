@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, TrabajadorCreationForm, AsistenciaForm
-from .models import CustomUser, Trabajador
-from .scripts import generate_unique_username
+from .models import CustomUser, Trabajador, Asistencia
+from .scripts import generate_unique_username, getFirstWord
 from django.contrib.auth.forms import AuthenticationForm
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -110,10 +110,24 @@ def registrar_asistencia(request):
         form = AsistenciaForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             asistencia = form.save(commit=False)
+            # Si hay un último registro
+            ultimo_registro = Asistencia.objects.filter(trabajador=asistencia.trabajador,).order_by('-id').first()
+            # Obtenemos el último registro, si existe
+            
+            if ultimo_registro:
+                controlUltimoRegistro=getFirstWord(ultimo_registro.tipo)
+                controlAsistenciaTipo=getFirstWord(asistencia.tipo)
+                if controlUltimoRegistro==controlAsistenciaTipo:
+                    error="Si aún no has registrado tu salida no puedes marcar una nueva entrada. Tampoco marcar 2 salidas seguidas, ÚLTIMO REGISTRO:   "+str(ultimo_registro.fecha)+"   "+str(ultimo_registro.hora.strftime("%H:%M:%S"))+" "+((ultimo_registro.tipo).upper())
+                    messages.error(request,error)
+                    return redirect('registrar_asistencia')
+                # Si no hay un último registro, significa que es el primer registro del día
+            elif (asistencia.tipo == 'salida')| (asistencia.tipo == 'salida a destiempo'):
+                messages.error(request, 'No puedes registrar una salida sin haber registrado previamente tu entrada.')
+                return redirect('registrar_asistencia')
             asistencia.trabajador = trabajador  # Asegurar que se asigna el trabajador logueado
             asistencia.save()
             return redirect('home')  # Redirigir a la lista de asistencias u otra vista
-
     else:
         form = AsistenciaForm(user=request.user)
     

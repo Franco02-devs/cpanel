@@ -46,20 +46,31 @@ class TrabajadorCreationForm(forms.ModelForm):
 class AsistenciaForm(forms.ModelForm):
     class Meta:
         model = Asistencia
-        fields = ['tipo', 'fecha_diferida','lugar',  'lugar_campo', 'foto']
+        fields = ['trabajador','tipo', 'fecha_diferida','lugar',  'lugar_campo', 'foto']
         widgets = {
             'fecha_diferida': forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
-            'lugar_campo': forms.TextInput(),
+            'lugar_campo': forms.TextInput(attrs={'placeholder': 'Especifique el lugar en campo'}),
         }
     
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         
+        self.fields['tipo'].initial = 'entrada'
+        self.fields['trabajador'].label = 'Colaborador'
+        self.fields['tipo'].label = 'Tipo de Asistencia'
+        self.fields['fecha_diferida'].label = 'Fecha y Hora de Asistencia (Si es a destiempo)'
+        self.fields['lugar'].label = 'Lugar de Registro'
+        self.fields['lugar_campo'].label = 'Lugar en Campo (Solo en campo)'
+        self.fields['foto'].label = 'Foto (Fecha y Hora)'
+        
         # Preseleccionar lugar según el rol preferido
         if user and hasattr(user, 'trabajador'):
             rol_preferido = user.trabajador.rol_preferido
+            trabajador=user.trabajador
             self.fields['lugar'].initial = rol_preferido
+            self.fields['trabajador'].initial = trabajador
+            self.fields['trabajador'].disabled = True
         
     def clean(self):
         cleaned_data = super().clean()
