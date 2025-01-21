@@ -103,6 +103,7 @@ footer {
     font-weight: 150;
 }
 
+
 /* Formularios generales */
 form {
     display: flex;
@@ -166,6 +167,15 @@ form select:focus {
     border-color: #4a90e2;
     outline: none;
 }
+.form-error {
+    color: red;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
 
 /* Estilo para los mensajes de error */
 .error-message {
