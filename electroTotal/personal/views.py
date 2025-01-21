@@ -15,6 +15,11 @@ def create_user_view(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
             user.save()
+            trabajador=Trabajador.objects.create(
+                user=user,
+                empleado_id=str(user.id),
+                empleado_nombre=form.cleaned_data['first_name'],          
+            )
             return redirect('user_creado', user_id=user.id)
     else:
         form = CustomUserCreationForm()
@@ -92,7 +97,8 @@ def home_view(request):
         mensaje = "¡Inicia sesión!"
     
     return render(request, 'home.html', {'mensaje': mensaje})
-
+    
+@user_passes_test(lambda u: u.is_superuser or (u.user_type=="admin"))
 def home_view2(request):
     if request.user.is_authenticated:
         username = request.user.username
@@ -104,6 +110,36 @@ def home_view2(request):
 
 @login_required
 def registrar_asistencia(request):
+    trabajador = request.user.trabajador  # Obtener el trabajador del usuario logueado
+    
+    if request.method == 'POST':
+        form = AsistenciaForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            asistencia = form.save(commit=False)
+            # Si hay un último registro
+            ultimo_registro = Asistencia.objects.filter(trabajador=asistencia.trabajador,).order_by('-id').first()
+            # Obtenemos el último registro, si existe
+            
+            if ultimo_registro:
+                controlUltimoRegistro=getFirstWord(ultimo_registro.tipo)
+                controlAsistenciaTipo=getFirstWord(asistencia.tipo)
+                if controlUltimoRegistro==controlAsistenciaTipo:
+                    error="Si aún no has registrado tu salida no puedes marcar una nueva entrada. Tampoco marcar 2 salidas seguidas, ÚLTIMO REGISTRO:   "+str(ultimo_registro.fecha)+"   "+str(ultimo_registro.hora.strftime("%H:%M:%S"))+" "+((ultimo_registro.tipo).upper())
+                    messages.error(request,error)
+                    return redirect('registrar_asistencia')
+                # Si no hay un último registro, significa que es el primer registro del día
+            elif (asistencia.tipo == 'salida')| (asistencia.tipo == 'salida a destiempo'):
+                messages.error(request, 'No puedes registrar una salida sin haber registrado previamente tu entrada.')
+                return redirect('registrar_asistencia')
+            asistencia.trabajador = trabajador  # Asegurar que se asigna el trabajador logueado
+            asistencia.save()
+            return redirect('home')  # Redirigir a la lista de asistencias u otra vista
+    else:
+        form = AsistenciaForm(user=request.user)
+    
+    return render(request, 'registrar_asistencia.html', {'form': form})
+@login_required
+def sincronizarAsistencia(request):
     trabajador = request.user.trabajador  # Obtener el trabajador del usuario logueado
     
     if request.method == 'POST':

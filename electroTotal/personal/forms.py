@@ -7,7 +7,14 @@ class CustomUserCreationForm(forms.ModelForm):
     
     class Meta:
         model = CustomUser
-        fields = ['username', 'user_type', 'password1', 'password2']
+        fields = ['username','first_name', 'user_type', 'password1', 'password2']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['user_type'].label = 'Tipo de usuario(user/admin):'
+        self.fields['first_name'].label = 'Nombre de trabjador:'
+
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -21,6 +28,12 @@ class CustomUserCreationForm(forms.ModelForm):
         if CustomUser.objects.filter(username=username).exists():
             raise forms.ValidationError("Este nombre de usuario ya está en uso.")
         return username
+    
+    def clean_empleado_nombre(self):
+        empleado_nombre = self.cleaned_data.get('empleado_nombre')
+        if Trabajador.objects.filter(empleado_nombre=empleado_nombre).exists():
+            raise forms.ValidationError("Ya existe un colaborador con este nombre")
+        return empleado_nombre
 
 class TrabajadorCreationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="Contraseña", required=True)
