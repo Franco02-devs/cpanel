@@ -41,8 +41,8 @@
         }
         
         .dashboard-box img {
-            width: 100%;
-            height: 100%;
+            width: 60%;
+            height: 60%;
             object-fit: cover;
             opacity: 0.7; /* Imagen suave */
             transition: opacity 0.3s ease;
@@ -61,11 +61,10 @@
         
         .dashboard-box .label {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
+            bottom: 2px;
+            left: center;
             color: white;
             font-size: 11px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         
     </style>
@@ -85,9 +84,24 @@
 
             <!-- Cuadro para crear trabajador -->
             <div class="dashboard-box">
-                <img src="https://i.ibb.co/1zdkvgn/96242414-empleados-de-la-empresa-ilustraci-n-vectorial-en-estilo-de-dibujos-animados-removebg-previe.png" alt="Crear Trabajador">
+                <img src="https://cdn-icons-png.flaticon.com/512/2942/2942781.png" alt="Crear Trabajador">
                 <div class="label">Crear un Colaborador</div>
                 <a href="{% url 'create_trabajador' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+            </div>
+            <div class="dashboard-box">
+                <img src="https://cdn-icons-png.freepik.com/512/3663/3663509.png" alt="Lista de colaboradores">
+                <div class="label">Lista de colaboradores</div>
+                <a href="{% url 'lista_trabajadores' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+            </div>
+            <div class="dashboard-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/5146/5146927.png" alt="Lista de registros">
+                <div class="label">Lista de registros</div>
+                <a href="{% url 'asistencia_completa' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+            </div>
+            <div class="dashboard-box">
+                <img src="https://i.pinimg.com/originals/1b/db/8a/1bdb8ac897512116cbac58ffe7560d82.png" alt="Generar reporte">
+                <div class="label">Generar reporte</div>
+                <a href="{% url 'excel' %}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
             </div>
 
             <!-- Aquí puedes agregar más cuadros si lo deseas -->

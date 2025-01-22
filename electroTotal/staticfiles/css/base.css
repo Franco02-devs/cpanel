@@ -1,0 +1,302 @@
+/* base.css */
+
+/* Estilo Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cabecera */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0.5rem 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: #003366;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo img {
+    width: 160px;
+    height: auto;
+}
+
+/* Menú y Navbar */
+#menu {
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.navbar a,
+.navbar span {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 50;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #f83f3f;
+}
+
+/* Contenido principal */
+main h1 {
+    font-size: 3.2rem;
+    font-weight: 150;
+    color: #003366;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* Pie de página */
+footer {
+    background-color: #054381;
+    color: #f1f1f1;
+    text-align: center;
+    padding: 3rem 1rem;
+    font-size: 1.1rem;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de formularios */
+.form-container {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 25px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    color: #003366;
+    text-align: center;
+    border: 2px solid #003366;
+}
+
+.form-container h1 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    font-weight: 150;
+}
+
+
+/* Formularios generales */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+form label {
+    font-size: 1.1rem;
+    font-weight: 50;
+    color: #006699;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+form input {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 2px solid #d1e1f1;
+    border-radius: 0px;
+    background-color: #ffffff;
+    color: #333333;
+    width: 100%;
+    transition: border 0.3s ease;
+}
+
+form input:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+form button {
+    padding: 12px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #78b3f7;
+    border-color: #4a90e2;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los campos de lista desplegable (select) */
+form select {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 2px solid #d1e1f1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #333333;
+    width: 100%;
+    cursor: pointer;
+    transition: border 0.3s ease;
+}
+
+form select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+.form-error {
+    color: red;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+
+/* Estilo para los mensajes de error */
+.error-message {
+    color: #ff4d4d;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    margin-top: 8px;
+}
+
+/* Mensajes de éxito */
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Estilo para los mensajes dentro del formulario */
+.alert {
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.alert.error {
+    color: #f01b04;
+    background-color: #f8d1d1;
+    border: 1px solid #f8c6c6;
+}
+
+.alert.success {
+    color: #0d9c00;
+    background-color: #e1fac1;
+    border: 1px solid #c1e7a4;
+}
+
+.alert.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+/* Cambios para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .navbar {
+        gap: 1rem;
+    }
+
+    .navbar a, .navbar span {
+        font-size: 1.1rem;
+    }
+
+    #menu {
+        display: block;
+    }
+
+    .header {
+        padding: 0.3rem 1%;
+    }
+}
+
+/* Cambios para pantallas más pequeñas (ej. móviles) */
+@media (max-width: 480px) {
+    .header {
+        padding: 0.4rem 1%;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .navbar a, .navbar span {
+        font-size: 1.2rem;
+    }
+}
+
+/* Estilos para el fondo y cuerpo */
+body {
+    background-color: #f7f7f7;
+    color: #333333;
+    font-size: 16px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://twind.io/cl/wp-content/uploads/2023/06/seguridad-y-salud-de-los-trabajadores.webp');
+    background-size: cover;
+    background-position: center center;
+    filter: blur(0.6px);
+    opacity: 0.5;
+    z-index: -1;
+}
+
+main {
+    padding-top: 90px;
+    position: relative;
+    z-index: 10;
+}
+
+header, footer {
+    z-index: 10;
+}

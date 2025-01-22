@@ -17,5 +17,5 @@ urlpatterns = [
     path('trabajadores/', views.lista_trabajadores, name='lista_trabajadores'),
     path('trabajadores/<int:trabajador_id>/asistencias/', views.asistencias_trabajador, name='asistencias_trabajador'),
     path('asistencia/detalle/<int:id>/', views.asistencia_detalle, name='asistencia_detalle'),
-
+    path('excel/', views.generar_excel_asistencias, name='excel'),
 ]

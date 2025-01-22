@@ -55,26 +55,46 @@ def limpiarAsistenciasIncompletas(trabajador):
         trabajador.ultimaAsistenciaProcesada=int(ultimaAsistencia.id)
         trabajador.save()
         
-def ajustar_errores():
-    print("daa")
-    print("daa")
-    print("daa")
-    print("daa")
-    print("daa")
-    
-    
+def corregirFecha(asistencia):
+    if asistencia.fecha_diferida:
+        asistencia.finalFecha=asistencia.fecha_diferida
+        asistencia.fecha_diferida=None
+        asistencia.tipo=getFirstWord(asistencia.tipo)
+        asistencia.save()
+
+def corregirAllFecha():
+    asistencias = Asistencia.objects.all()
+
+    for asistencia in asistencias:
+        try:
+            corregirFecha(asistencia)
+        except Exception as e:
+            print(f"Error al corregir la asistencia {asistencia.id}: {e}")
+            
+def completarLimpiarAll():
+    trabajadores = Trabajador.objects.all()
+
+    for trabajador in trabajadores:
+        try:
+            completarAsistencias(trabajador)
+            limpiarAsistenciasIncompletas(trabajador)
+        except Exception as e:
+            print(f"Error al corregir la asistencia {trabajador.id}: {e}")
+            
+def diferenciaFecha(fecha_inicio, fecha_fin):
+    if fecha_inicio and fecha_fin:
+        # Calculamos la diferencia entre las fechas
+        diferencia = fecha_fin - fecha_inicio
         
+        # Extraemos las horas, minutos y segundos
+        horas = diferencia.days * 24 + diferencia.seconds // 3600
+        minutos = (diferencia.seconds % 3600) // 60
+        segundos = diferencia.seconds % 60
+        
+        # Devuelves la diferencia en formato horas:minutos:segundos
+        return f'{horas:02}:{minutos:02}:{segundos:02}'
+    return None
+
 
     
-        
-        
-        
-        
     
-        
-        
-
-    
-    
-    
-
