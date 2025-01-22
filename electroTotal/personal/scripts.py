@@ -1,6 +1,5 @@
 # personal/scripts.py
 from .models import CustomUser, Asistencia, Trabajador, AsistenciaCompleta
-from django.db import transaction
 
 
 def getFirstWord(string):
@@ -17,7 +16,8 @@ def generate_unique_username(base_username):
         counter += 1
     return username.lower()
 
-def completarAsistencias(trabajador,last):
+def completarAsistencias(trabajador):
+    last=trabajador.ultimaAsistenciaProcesada   
     asistencias = list(Asistencia.objects.filter(trabajador=trabajador,id__gte=last))
     print(asistencias)
     entrada = None
@@ -42,6 +42,23 @@ def completarAsistencias(trabajador,last):
             entrada=entrada,
             salida=None,
         )
+def limpiarAsistenciasIncompletas(trabajador):
+    asistencias =list(AsistenciaCompleta.objects.filter(trabajador=trabajador))
+    asistencia=None
+    for i in range(len(asistencias)-1):
+        asistencia = asistencias[i]
+        if asistencia.salida is None:
+            asistencia.delete()
+    if asistencia.salida is not None:
+        ultimaAsistencia=asistencia.salida
+        print(ultimaAsistencia.id)
+        trabajador.ultimaAsistenciaProcesada=int(ultimaAsistencia.id)
+        trabajador.save()
+    
+    
+        
+
+    
         
         
         

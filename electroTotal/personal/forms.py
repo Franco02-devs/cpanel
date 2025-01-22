@@ -1,5 +1,6 @@
 from django import forms
 from .models import CustomUser, Trabajador, Asistencia
+from .scripts import getFirstWord
 
 class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="Contraseña", required=True)
@@ -13,7 +14,7 @@ class CustomUserCreationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         self.fields['user_type'].label = 'Tipo de usuario(user/admin):'
-        self.fields['first_name'].label = 'Nombre de trabjador:'
+        self.fields['first_name'].label = 'Nombre del colaborador:'
 
 
     def clean_password2(self):
@@ -90,6 +91,15 @@ class AsistenciaForm(forms.ModelForm):
             self.fields['lugar'].initial = self.user.trabajador.rol_preferido
             self.fields['trabajador'].initial = self.user.trabajador
             self.fields['trabajador'].disabled = True
+            if self.user.user_type=='admin':
+                self.fields['trabajador'].disabled = False
+            ultimo_registro = Asistencia.objects.filter(trabajador=self.user.trabajador).order_by('-id').first()
+            if ultimo_registro:
+                if getFirstWord(str(ultimo_registro.tipo))=='entrada':
+                    self.fields['tipo'].initial = 'salida'
+                else:
+                    self.fields['tipo'].initial = 'entrada'                  
+                    
 
     def clean(self):
         cleaned_data = super().clean()

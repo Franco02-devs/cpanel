@@ -15,10 +15,10 @@
 <body>
     <!-- Cabecera -->
     <header class="header">
-        <a href="#" class="logo">
+        <a href="{% url 'home' %}" class="logo">
             <img src="https://i.ibb.co/D91DT3B/logo-removebg-preview-1.png" alt="ELECTROTOTAL">
-          </a>
-          <div id="menu" class="bx bx-menu"></div>
+        </a>
+        <div id="menu" class="bx bx-menu"></div>
         <nav class="navbar">
             {% if user.is_authenticated %}
                 <span>{{ user.username }}</span>
@@ -26,6 +26,11 @@
             {% else %}
                 <a href="{% url 'login' %}">Iniciar sesión</a>
             {% endif %}
+            
+            <!-- Barra de búsqueda solo visible en el template que lo requiera -->
+            {% block search %}
+            <!-- Este bloque puede ser reemplazado por la barra de búsqueda en el template que lo extienda -->
+            {% endblock %}
         </nav>
     </header>
 
@@ -38,7 +43,7 @@
 
     <!-- Pie de página -->
     <footer>
-        <p>&copy; 2025 ELECTROTOTAL </p>
+        <p>&copy; 2025 ELECTROTOTAL</p>
     </footer>
 
     <!-- Scripts JS -->

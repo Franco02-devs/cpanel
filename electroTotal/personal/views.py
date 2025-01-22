@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, TrabajadorCreationForm, AsistenciaForm
-from .models import CustomUser, Trabajador, Asistencia
+from .models import CustomUser, Trabajador, Asistencia, AsistenciaCompleta
 from .scripts import generate_unique_username, getFirstWord
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -114,12 +114,35 @@ def registrar_asistencia(request):
         form = AsistenciaForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             asistencia = form.save(commit=False)
-            asistencia.trabajador = request.user.trabajador
+            asistencia.trabajador = form.cleaned_data.get('trabajador')
             asistencia.save()
-            return redirect('home')
+            return redirect('confirmacion_asistencia',asistencia_id=asistencia.id)
     else:
         form = AsistenciaForm(user=request.user)
     
     return render(request, 'registrar_asistencia.html', {'form': form})
+
+@login_required
+def confirmacion_asistencia(request, asistencia_id):
+    # Obtener la asistencia registrada
+    asistencia = Asistencia.objects.get(id=asistencia_id)
+    return render(request, 'confirmacion_asistencia.html', {'asistencia': asistencia})
+
+@login_required
+def asistencia_completa_view(request):
+    trabajadores = Trabajador.objects.all()
+    asistencias_completas = AsistenciaCompleta.objects.all()
+
+    # Búsqueda por nombre del trabajador
+    if 'search' in request.GET:
+        search_query = request.GET['search']
+        asistencias_completas = asistencias_completas.filter(trabajador__empleado_nombre__icontains=search_query)
+
+    context = {
+        'trabajadores': trabajadores,
+        'asistencias_completas': asistencias_completas,
+    }
+    return render(request, 'asistencia_completa_list.html', context)
+
 
 

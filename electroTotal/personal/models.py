@@ -6,7 +6,7 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(max_length=10, default='user',choices=[('user', 'User'), ('admin', 'Admin')])
 
 class Trabajador(models.Model):
-    ultimaAsistenciaProcesada=0
+    ultimaAsistenciaProcesada = models.IntegerField(default=0)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     empleado_id = models.CharField(max_length=20, unique=True)
     empleado_nombre = models.CharField(max_length=30, unique=True)

@@ -12,4 +12,6 @@ urlpatterns = [
     path('user_creado/<int:user_id>/', views.user_created_view, name='user_creado'),
     path('admin/dashboard/', views.dashboard_view, name='admin_dashboard'),
     path('registrar_asistencia/', views.registrar_asistencia, name='registrar_asistencia'),
+    path('confirmacion/<int:asistencia_id>/', views.confirmacion_asistencia, name='confirmacion_asistencia'),
+    path('list/', views.asistencia_completa_view, name='asistencia_completa'),
 ]
