@@ -54,6 +54,13 @@ def limpiarAsistenciasIncompletas(trabajador):
         print(ultimaAsistencia.id)
         trabajador.ultimaAsistenciaProcesada=int(ultimaAsistencia.id)
         trabajador.save()
+        
+def ajustar_errores():
+    print("daa")
+    print("daa")
+    print("daa")
+    print("daa")
+    print("daa")
     
     
         

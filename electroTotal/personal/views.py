@@ -4,8 +4,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, TrabajadorCreationForm, AsistenciaForm
 from .models import CustomUser, Trabajador, Asistencia, AsistenciaCompleta
-from .scripts import generate_unique_username, getFirstWord
+from .scripts import generate_unique_username, getFirstWord,completarAsistencias,limpiarAsistenciasIncompletas,ajustar_errores
 from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, get_object_or_404
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def create_user_view(request):
@@ -143,6 +145,32 @@ def asistencia_completa_view(request):
         'asistencias_completas': asistencias_completas,
     }
     return render(request, 'asistencia_completa_list.html', context)
+def lista_trabajadores(request):
+    trabajadores = Trabajador.objects.all()  # Obtener todos los trabajadores
+    return render(request, 'lista_trabajadores.html', {'trabajadores': trabajadores})
+def asistencias_trabajador(request, trabajador_id):
+    trabajador = get_object_or_404(Trabajador, id=trabajador_id)  # Obtener el trabajador
+    completarAsistencias(trabajador)
+    limpiarAsistenciasIncompletas(trabajador)
+    asistencias = Asistencia.objects.filter(trabajador=trabajador).order_by('fecha')  # Obtener sus asistencias
+    return render(request, 'asistencias_trabajador.html', {'trabajador': trabajador, 'asistencias': asistencias})
+
+def asistencia_detalle(request, id):
+    # Obtenemos la asistencia por ID
+    asistencia = get_object_or_404(Asistencia, id=id)
+    trabajador = asistencia.trabajador  # Obtenemos el trabajador relacionado con la asistencia
+    
+    # Si se hace una solicitud POST para ajustar errores, llamamos a la función
+    if request.method == "POST" and "ajustar_errores" in request.POST:
+        # Llamamos a la función que ya creaste para ajustar la asistencia
+        ajustar_errores()  # Suponiendo que tienes una función llamada ajustar_errores en el modelo Asistencia
+        # Redirigimos después de ajustar
+        return redirect('asistencias_trabajador', trabajador_id=trabajador.id)
+
+    # Renderizamos la plantilla con los detalles de la asistencia
+    return render(request, 'asistencia_detalle.html', {'asistencia': asistencia, 'trabajador': trabajador})
+
+
 
 
 

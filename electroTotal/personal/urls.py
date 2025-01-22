@@ -14,4 +14,8 @@ urlpatterns = [
     path('registrar_asistencia/', views.registrar_asistencia, name='registrar_asistencia'),
     path('confirmacion/<int:asistencia_id>/', views.confirmacion_asistencia, name='confirmacion_asistencia'),
     path('list/', views.asistencia_completa_view, name='asistencia_completa'),
+    path('trabajadores/', views.lista_trabajadores, name='lista_trabajadores'),
+    path('trabajadores/<int:trabajador_id>/asistencias/', views.asistencias_trabajador, name='asistencias_trabajador'),
+    path('asistencia/detalle/<int:id>/', views.asistencia_detalle, name='asistencia_detalle'),
+
 ]

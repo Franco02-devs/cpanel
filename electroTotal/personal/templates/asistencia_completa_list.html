@@ -87,6 +87,8 @@
 
 
 {% block content %}
+{% load custom_filters %}
+
     <h1>Registros</h1>
 
     <table>
@@ -97,6 +99,8 @@
                 <th>Día de Salida</th>
                 <th>Hora de Entrada</th>
                 <th>Hora de Salida</th>
+                <th>Horas trabajadas</th>
+
             </tr>
         </thead>
         <tbody>
@@ -111,10 +115,17 @@
                             <span>FALTA</span>
                         {% endif %}
                     </td>
-                    <td>{{ asistencia.entrada.fecha|time:"H:i:s" }}</td>
+                    <td>{{ asistencia.entrada.fecha|time:"h:i A"  }}</td>
                     <td>
                         {% if asistencia.salida %}
-                            {{ asistencia.salida.fecha|time:"H:i:s" }}
+                            {{ asistencia.salida.fecha|time:"h:i A"  }}
+                        {% else %}
+                            <span>FALTA</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if asistencia.salida %}
+                            {{ asistencia.entrada.fecha|diferencia_fecha:asistencia.salida.fecha}}
                         {% else %}
                             <span>FALTA</span>
                         {% endif %}

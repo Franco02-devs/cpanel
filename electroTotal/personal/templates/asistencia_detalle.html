@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block extra_styles %}
+  <style>
+    /* Estilos para hacer una presentación tipo pizarra/checklist */
+    .detalle-asistencia {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .detalle-asistencia h2 {
+      color: #333;
+      font-size: 1.8rem;
+    }
+
+    .detalle-asistencia ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .detalle-asistencia li {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .detalle-asistencia li span {
+      font-weight: bold;
+    }
+
+    .detalle-asistencia .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .detalle-asistencia .btn-danger {
+      background-color: #f44336;
+    }
+
+    .detalle-asistencia .btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="detalle-asistencia">
+    <h2>Detalle de Asistencia</h2>
+
+    <ul>
+      <li>
+        <span>Tipo de Registro:</span> {{ asistencia.tipo|upper }}
+      </li>
+      <li>
+        <span>Lugar:</span> {{ asistencia.lugar|upper }}
+      </li>
+      <li>
+        <span>Campo:</span> 
+        {% if asistencia.lugar_campo %}
+          {{ asistencia.lugar_campo }}
+        {% else %}
+          NO
+        {% endif %}
+      </li>
+      <li>
+        <span>Fecha de Asistencia:</span> {{ asistencia.fecha|date:"d/m/Y h:i A" }}
+      </li>
+      <li>
+        <span>Fecha Diferida:</span> 
+        {% if asistencia.fecha_diferida %}
+          {{ asistencia.fecha_diferida|date:"d/m h:i A" }}
+        {% else %}
+          NO
+        {% endif %}
+      </li>
+      <li>
+        <span>Foto:</span>
+        {% if asistencia.foto %}
+          <a href="{{ asistencia.foto.url }}" target="_blank">Ver Foto</a>
+        {% else %}
+          No disponible
+        {% endif %}
+      </li>
+    </ul>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="ajustar_errores" class="btn">Ajustar Errores</button>
+    </form>
+
+    <div class="buttons">
+       <a href="{% url 'asistencias_trabajador' trabajador.id %}" class="btn btn-danger">Volver a Asistencias</a>
+    </div>
+  </div>
+{% endblock %}
